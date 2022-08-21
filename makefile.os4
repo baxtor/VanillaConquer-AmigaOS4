@@ -1,0 +1,332 @@
+
+TARGET 		= vanillatd
+TARGET2		= vanillara
+AMIGADATE = $(shell date +"%-d.%-m.%Y")
+VERSION = 1.0R1
+CXX		= ppc-amigaos-g++
+
+CXXFLAGS 	= -O2 -mcrt=clib2 -athread=native -std=gnu++11 -Wall -fcheck-new -fsigned-char -D__BIG_ENDIAN__ -DMEGAMAPS -DENGLISH -DFIXIT_FAST_LOAD -DSDL2_BUILD -DOPENAL_BUILD -DTRUE_FALSE_DEFINED -D__AMIGA__ -D__AMIGAOS4__ -DNOMINMAX -fpermissive -Wno-narrowing -D__AMIGAVER__=\"$(VERSION)\"  -D__AMIGADATE__=\"$(AMIGADATE)\"
+CXXFLAGS	+= -I/usr/local/amiga/ppc-amigaos/SDK/Local/clib2/include/SDL2/ -I/usr/local/amiga/ppc-amigaos/SDK/Local/clib2/include/AL/  -I/usr/local/amiga/ppc-amigaos/SDK/Local/clib2/include/ -I./common -I./
+CXXLIBS		=-L/usr/local/amiga/ppc-amigaos/SDK/Local/clib2/lib/ -lopenal -L/usr/local/amiga/ppc-amigaos/SDK/Local/clib2/lib/ -lSDL2 -lm -lc -lpthread
+STRIP = ppc-amigaos-strip
+
+OBJS_COMMON		= common/gitinfo.o common/_diptabl.o common/alloc.o common/auduncmp.o common/b64pipe.o common/b64straw.o common/base64.o common/bfiofile.o common/blowfish.o common/blowpipe.o common/blwstraw.o common/buff.o common/buffer.o common/buffglbl.o common/ccfile.o common/cdfile.o common/cliprect.o common/combuf.o common/control.o common/crc.o common/crew.o common/cstraw.o common/connect.o common/debugstring.o common/delay.o common/dipthong.o common/drawbuff.o common/drawline.o common/drawmisc.o common/face.o common/fading.o common/field.o common/file.o common/filepcx.o common/fixed.o common/font.o common/gadget.o common/getshape.o common/graphicsviewport.o common/hsv.o common/iff.o common/ini.o common/int.o common/internet.o common/irandom.o common/keybuff.o common/keyframe.o common/lcw.o common/lcwpipe.o common/lcwstraw.o common/linear.o common/link.o common/load.o common/memrev.o common/misc.o common/mixfile.o common/mp.o common/newdel.o common/packet.o common/palette.o common/palettec.o common/paths.o common/pipe.o common/pk.o common/pkpipe.o common/pkstraw.o common/ramfile.o common/random.o common/rawfile.o common/readline.o common/rect.o common/rgb.o common/rndstraw.o common/settings.o common/sha.o common/shape.o common/shapipe.o common/shastraw.o common/soscodec.o common/stamp.o common/straw.o common/timer.o common/timerdwn.o common/tobuff.o common/toggle.o common/vector.o common/winasm.o common/windows.o common/winhide.o common/winstub.o common/wsa.o common/xordelta.o common/xpipe.o common/xstraw.o common/file_posix.o common/paths_posix.o common/framelimit.o common/gbuffer.o common/interpal.o common/ipxaddr.o common/tcpip.o common/tcpip_null.o common/unvqbuff.o common/vqaconfig.o common/vqadrawer.o common/vqaloader.o common/vqapalette.o common/vqatask.o common/vqaver.o common/wsproto.o common/wspudp.o common/wwkeyboard.o common/wwmouse.o common/soundio_openal.o common/vqaaudio_openal.o common/video_sdl2.o
+
+OBJS_TIBDAWN = tiberiandawn/aadata.o \
+    tiberiandawn/abstract.o \
+    tiberiandawn/adata.o \
+    tiberiandawn/aircraft.o \
+    tiberiandawn/anim.o \
+    tiberiandawn/audio.o \
+    tiberiandawn/base.o \
+    tiberiandawn/bbdata.o \
+    tiberiandawn/bdata.o \
+    tiberiandawn/building.o \
+    tiberiandawn/bullet.o \
+    tiberiandawn/cargo.o \
+    tiberiandawn/ccini.o \
+    tiberiandawn/cdata.o \
+    tiberiandawn/cell.o \
+    tiberiandawn/checkbox.o \
+    tiberiandawn/cheklist.o \
+    tiberiandawn/colrlist.o \
+    tiberiandawn/combat.o \
+    tiberiandawn/confdlg.o \
+    tiberiandawn/conquer.o \
+    tiberiandawn/const.o \
+    tiberiandawn/coord.o \
+    tiberiandawn/credits.o \
+    tiberiandawn/debug.o \
+    tiberiandawn/dial8.o \
+    tiberiandawn/dialog.o \
+    tiberiandawn/display.o \
+    tiberiandawn/door.o \
+    tiberiandawn/drive.o \
+    tiberiandawn/drop.o \
+    tiberiandawn/edit.o \
+    tiberiandawn/ending.o \
+    tiberiandawn/event.o \
+    tiberiandawn/expand.o \
+    tiberiandawn/facing.o \
+    tiberiandawn/factory.o \
+    tiberiandawn/findpath.o \
+    tiberiandawn/flasher.o \
+    tiberiandawn/fly.o \
+    tiberiandawn/foot.o \
+    tiberiandawn/fuse.o \
+    tiberiandawn/gamedlg.o \
+    tiberiandawn/gauge.o \
+    tiberiandawn/globals.o \
+    tiberiandawn/goptions.o \
+    tiberiandawn/gscreen.o \
+    tiberiandawn/hdata.o \
+    tiberiandawn/heap.o \
+    tiberiandawn/help.o \
+    tiberiandawn/house.o \
+    tiberiandawn/iconset.o \
+    tiberiandawn/idata.o \
+    tiberiandawn/infantry.o \
+    tiberiandawn/init.o \
+    tiberiandawn/intro.o \
+    tiberiandawn/iomap.o \
+    tiberiandawn/ioobj.o \
+    tiberiandawn/ipx.o \
+    tiberiandawn/ipx95.o \
+    tiberiandawn/ipxconn.o \
+    tiberiandawn/ipxgconn.o \
+    tiberiandawn/ipxmgr.o \
+    tiberiandawn/jshell.o \
+    tiberiandawn/layer.o \
+    tiberiandawn/lib.o \
+    tiberiandawn/list.o \
+    tiberiandawn/loaddlg.o \
+    tiberiandawn/logic.o \
+    tiberiandawn/map.o \
+    tiberiandawn/mapeddlg.o \
+    tiberiandawn/mapedit.o \
+    tiberiandawn/mapedplc.o \
+    tiberiandawn/mapedsel.o \
+    tiberiandawn/mapedtm.o \
+    tiberiandawn/mapsel.o \
+    tiberiandawn/menus.o \
+    tiberiandawn/miscasm.o \
+    tiberiandawn/mission.o \
+    tiberiandawn/monoc.o \
+    tiberiandawn/mouse.o \
+    tiberiandawn/mplayer.o \
+    tiberiandawn/msgbox.o \
+    tiberiandawn/msglist.o \
+    tiberiandawn/netdlg.o \
+    tiberiandawn/noseqcon.o \
+    tiberiandawn/nulldlg.o \
+    tiberiandawn/object.o \
+    tiberiandawn/odata.o \
+    tiberiandawn/options.o \
+    tiberiandawn/overlay.o \
+    tiberiandawn/power.o \
+    tiberiandawn/profile.o \
+    tiberiandawn/queue.o \
+    tiberiandawn/radar.o \
+    tiberiandawn/radio.o \
+    tiberiandawn/reinf.o \
+    tiberiandawn/rules.o \
+    tiberiandawn/saveload.o \
+    tiberiandawn/scenario.o \
+    tiberiandawn/scenarioini.o \
+    tiberiandawn/score.o \
+    tiberiandawn/scroll.o \
+    tiberiandawn/sdata.o \
+    tiberiandawn/shapebtn.o \
+    tiberiandawn/sidebar.o \
+    tiberiandawn/slider.o \
+    tiberiandawn/smudge.o \
+    tiberiandawn/sounddlg.o \
+    tiberiandawn/special.o \
+    tiberiandawn/startup.o \
+    tiberiandawn/stats.o \
+    tiberiandawn/super.o \
+    tiberiandawn/tab.o \
+    tiberiandawn/tarcom.o \
+    tiberiandawn/target.o \
+    tiberiandawn/tdata.o \
+    tiberiandawn/team.o \
+    tiberiandawn/teamtype.o \
+    tiberiandawn/techno.o \
+    tiberiandawn/template.o \
+    tiberiandawn/terrain.o \
+    tiberiandawn/textbtn.o \
+    tiberiandawn/theme.o \
+    tiberiandawn/trigger.o \
+    tiberiandawn/turret.o \
+    tiberiandawn/txtlabel.o \
+    tiberiandawn/udata.o \
+    tiberiandawn/unit.o \
+    tiberiandawn/visudlg.o \
+    tiberiandawn/winstub.o 
+
+OBJS_REDALERT = \
+	redalert/aadata.o \
+	redalert/abstract.o \
+	redalert/adata.o \
+	redalert/aircraft.o \
+	redalert/anim.o \
+	redalert/audio.o \
+    redalert/bar.o \
+    redalert/base.o \
+    redalert/bbdata.o \
+    redalert/bdata.o \
+    redalert/bench.o \
+    redalert/bigcheck.o \
+    redalert/building.o \
+    redalert/bullet.o \
+    redalert/cargo.o \
+    redalert/carry.o \
+    redalert/ccini.o \
+    redalert/ccptr.o \
+    redalert/cdata.o \
+    redalert/cell.o \
+    redalert/checkbox.o \
+    redalert/cheklist.o \
+    redalert/colrlist.o \
+    redalert/combat.o \
+    redalert/confdlg.o \
+    redalert/conquer.o \
+    redalert/const.o \
+    redalert/coord.o \
+    redalert/crate.o \
+    redalert/credits.o \
+    redalert/debug.o \
+    redalert/dial8.o \
+    redalert/dialog.o \
+    redalert/dibfile.o \
+    redalert/dibutil.o \
+    redalert/display.o \
+    redalert/door.o \
+    redalert/drive.o \
+    redalert/drop.o \
+    redalert/edit.o \
+    redalert/egos.o \
+    redalert/ending.o \
+    redalert/event.o \
+    redalert/expand.o \
+    redalert/face.o \
+    redalert/facing.o \
+    redalert/factory.o \
+    redalert/findpath.o \
+    redalert/flasher.o \
+    redalert/fly.o \
+    redalert/foot.o \
+    redalert/fuse.o \
+    redalert/gamedlg.o \
+    redalert/gauge.o \
+    redalert/globals.o \
+    redalert/goptions.o \
+    redalert/gscreen.o \
+    redalert/hdata.o \
+    redalert/heap.o \
+    redalert/help.o \
+    redalert/house.o \
+    redalert/iconlist.o \
+    redalert/iconset.o \
+    redalert/idata.o \
+    redalert/infantry.o \
+    redalert/init.o \
+    redalert/intro.o \
+    redalert/iomap.o \
+    redalert/ioobj.o \
+    redalert/ipx.o \
+    redalert/ipx95.o \
+    redalert/ipxconn.o \
+    redalert/ipxgconn.o \
+    redalert/ipxmgr.o \
+    redalert/jshell.o \
+    redalert/layer.o \
+    redalert/list.o \
+    redalert/loaddlg.o \
+    redalert/logic.o \
+    redalert/map.o \
+    redalert/mapeddlg.o \
+    redalert/mapedit.o \
+    redalert/mapedplc.o \
+    redalert/mapedsel.o \
+    redalert/mapedtm.o \
+    redalert/mapsel.o \
+    redalert/menus.o \
+    redalert/miscasm.o \
+    redalert/mission.o \
+    redalert/monoc.o \
+    redalert/mouse.o \
+    redalert/mplayer.o \
+    redalert/msgbox.o \
+    redalert/msglist.o \
+    redalert/netdlg.o \
+    redalert/nulldlg.o \
+    redalert/object.o \
+    redalert/odata.o \
+    redalert/options.o \
+    redalert/overlay.o \
+    redalert/power.o \
+    redalert/profile.o \
+    redalert/queue.o \
+    redalert/radar.o \
+    redalert/radio.o \
+    redalert/rawolapi.o \
+    redalert/reinf.o \
+    redalert/rules.o \
+    redalert/saveload.o \
+    redalert/scenario.o \
+    redalert/score.o \
+    redalert/scroll.o \
+    redalert/sdata.o \
+    redalert/seditdlg.o \
+    redalert/sendfile.o \
+    redalert/session.o \
+    redalert/shapebtn.o \
+    redalert/sidebar.o \
+    redalert/slider.o \
+    redalert/smudge.o \
+    redalert/sounddlg.o \
+    redalert/special.o \
+    redalert/startup.o \
+    redalert/statbtn.o \
+    redalert/stats.o \
+    redalert/super.o \
+    redalert/tab.o \
+    redalert/taction.o \
+    redalert/target.o \
+    redalert/tdata.o \
+    redalert/team.o \
+    redalert/teamtype.o \
+    redalert/techno.o \
+    redalert/template.o \
+    redalert/terrain.o \
+    redalert/tevent.o \
+    redalert/textbtn.o \
+    redalert/theme.o \
+    redalert/tooltip.o \
+    redalert/tracker.o \
+    redalert/trigger.o \
+    redalert/trigtype.o \
+    redalert/txtlabel.o \
+    redalert/udata.o \
+    redalert/unit.o \
+    redalert/vdata.o \
+    redalert/version.o \
+    redalert/vessel.o \
+    redalert/visudlg.o \
+    redalert/vortex.o \
+    redalert/warhead.o \
+    redalert/weapon.o \
+    redalert/winstub.o \
+    redalert/wol_cgam.o \
+    redalert/wol_chat.o \
+    redalert/wol_dnld.o \
+    redalert/wol_gsup.o \
+    redalert/wol_logn.o \
+    redalert/wol_main.o \
+    redalert/wol_opt.o \
+    redalert/wolapiob.o \
+    redalert/woledit.o \
+    redalert/wolstrng.o
+
+OBJS1 = $(OBJS_COMMON) $(OBJS_TIBDAWN)
+OBJS2 = $(OBJS_COMMON) $(OBJS_REDALERT)
+
+all: $(TARGET)
+redalert: $(TARGET2)
+
+$(TARGET): $(OBJS1)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(CXXLIBS)
+	$(STRIP) --strip-all $(TARGET) -o $(TARGET).strip
+
+$(TARGET2): $(OBJS2)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(CXXLIBS)
+	$(STRIP) --strip-all $(TARGET2) -o $(TARGET2).strip
+
+clean:
+	rm -f $(OBJS_COMMON) $(OBJS_TIBDAWN)
+	rm -f $(TARGET) $(TARGET).s $(TARGET).strip
+	rm -f $(TARGET2) $(TARGET2).s $(TARGET2).strip
+
+dump:
+	ppc-amigaos-objdump --disassemble-all --reloc $(TARGET) >$(TARGET).s
